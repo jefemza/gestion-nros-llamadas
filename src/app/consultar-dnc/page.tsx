@@ -175,7 +175,7 @@ export default function ConsultarDNCPage() {
               </div>
               <p className="text-gray-900 text-xl font-semibold mb-2">No se encontraron números</p>
               <p className="text-gray-600 text-lg">
-                El número "<span className="text-soft-blue font-mono">{searchTerm}</span>" no está registrado en el sistema DNC
+                El número &ldquo;<span className="text-soft-blue font-mono">{searchTerm}</span>&rdquo; no está registrado en el sistema DNC
               </p>
             </div>
               ) : (
