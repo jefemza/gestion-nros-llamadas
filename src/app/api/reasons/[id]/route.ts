@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -20,9 +20,11 @@ export async function DELETE(
       return NextResponse.json({ error: "Acceso denegado" }, { status: 403 });
     }
 
+    const { id } = await params;
+
     // Check if reason has associated DNC entries
     const reason = await prisma.reason.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         _count: {
           select: { dncEntries: true }
@@ -45,7 +47,7 @@ export async function DELETE(
     }
 
     await prisma.reason.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Motivo eliminado correctamente" });
